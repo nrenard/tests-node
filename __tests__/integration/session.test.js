@@ -8,7 +8,7 @@ const { User } = require("../../src/app/models");
 const userToCreate = {
   name: "Diego",
   email: "diego@rocketseat.com",
-  password_hash: "123456"
+  password: "123456"
 };
 
 describe("Authentication", () => {
@@ -19,14 +19,26 @@ describe("Authentication", () => {
   it("should be able to authenticate with valid credentials", async () => {
     const user = await User.create(userToCreate);
 
-    const response = await request(server).post("/sessions", {
-      json: true,
-      body: {
+    const response = await request(server)
+      .post("/sessions", { json: true })
+      .send({
         email: userToCreate.email,
-        password: userToCreate.password_hash
-      }
-    });
+        password: userToCreate.password
+      });
 
     expect(response.status).toBe(200);
+  });
+
+  it("should not be able to authenticate with invalid credentials", async () => {
+    const user = await User.create(userToCreate);
+
+    const response = await request(server)
+      .post("/sessions", { json: true })
+      .send({
+        email: userToCreate.email,
+        password: ""
+      });
+
+    expect(response.status).toBe(401);
   });
 });
