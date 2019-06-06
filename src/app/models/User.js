@@ -1,5 +1,7 @@
 const bcrypt = require("bcryptjs");
 
+const tokenService = require("../services/Token");
+
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
     "User",
@@ -22,6 +24,10 @@ module.exports = (sequelize, DataTypes) => {
 
   User.prototype.checkPassword = async function(password) {
     return await bcrypt.compare(password, this.password_hash);
+  };
+
+  User.prototype.generateToken = function() {
+    return tokenService.store({ id: this.id });
   };
 
   return User;

@@ -12,7 +12,9 @@ class SessionController {
       return res.status(401).json({ message: "Incorrect Password." });
     }
 
-    return res.send("aeeo");
+    return res.json({
+      token: user.generateToken()
+    });
   }
 }
 
