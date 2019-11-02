@@ -12,7 +12,7 @@
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.9.1",
     "pg": "^7.11.0",
-    "sequelize": "^5.8.7"
+    "sequelize": "^5.15.1"
   },
   "scripts": {
     "pretest": "NODE_ENV=test sequelize db:migrate",
